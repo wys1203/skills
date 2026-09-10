@@ -3,7 +3,9 @@ name: grill-evidence
 description: Interview the user to collect evidence for an incident or bug they can observe but you cannot reach. Use when the user reports a symptom ("I saw a 404 in the client log", "the job failed last night") and the facts live in logs, environments, or people you cannot query yourself.
 ---
 
-Interview the user to gather **evidence** until one explanation of the symptom survives. This is `grilling` pointed at a diagnosis: the same tree, frontier and rounds, but the nodes are **hypotheses** and the answers are **evidence**, not decisions.
+Interview a witness to gather **evidence** until one explanation of the symptom survives. This is `grilling` pointed at a diagnosis: the same tree, frontier and rounds, but the nodes are **hypotheses** and the answers are **evidence**, not decisions.
+
+Two roles take part, and they are not always the same person. The **investigator** owns the tree: scope, decisions, when to stop, and the root cause. The **witness** owns the evidence: they fetch it, confirm it, or deny it, and nothing more. A witness cannot end the session by saying the evidence is enough; only the investigator can. Unless the skill that called you says otherwise, the user is both.
 
 The symptom is not the root of the tree; the **path** is. A symptom is emitted by one hop on the path from the observer to the system, and you cannot list who might have emitted it until you know the hops. So the first round maps the path, and nothing else: what the observer is (browser, mobile app, CLI, another service, a job) and who owns it; every hop between it and the target (proxy, CDN, gateway, mesh sidecar, load balancer); and where each hop's logs live and which of them the user can query. Ask only what you need to draw the path. Do not hypothesise, and do not tell the user how to fetch anything, before the path is drawn: instructions written for an assumed environment are wrong in a way the user may not notice.
 
@@ -18,7 +20,7 @@ Work the tree in **rounds**. The **frontier** is every piece of evidence you can
 Every question needs a fact. Route each fact by who can reach it:
 
 - **You can fetch it** (repo, git log, deploy history, docs, tools you have): dispatch a sub-agent; never ask the user. Don't block on it: only the questions downstream of the running lookup wait.
-- **Only the user can fetch it** (production logs, the client device, a dashboard, another team): ask, and give the exact command, query, or place to look, and what to paste back. Never "please provide more info".
+- **Only the witness can fetch it** (production logs, the client device, a dashboard, another team): ask, and give the exact command, query, or place to look, and what to paste back. Never "please provide more info".
 - **It is a decision** (scope, priority, what "fixed" means): put it to the user and wait, as in `grilling`.
 
 The first bucket is a claim you test, not a label you assign. If the lookup fails (no tool, no context, no permission, no network), say so in one line: what you tried, why it failed. Then move the fact to the second bucket with an exact command, and record in the ledger what access would have saved the round trip. Never fill the gap with a guess: a guessed fact in the ledger poisons every branch built on it. With no tools at all, every fact is in the second bucket and the skill still holds; it becomes a questionnaire the user runs by hand.
@@ -52,4 +54,4 @@ Keep an **evidence ledger** and restate it every round:
 
 Redact every secret and token in anything you quote; write `<REDACTED>`. Quote only the lines that carry signal.
 
-Each round's evidence reshapes the tree: rule out branches, add hypotheses the evidence suggests, recompute the frontier. Do not reason past the evidence: a hypothesis with no supporting fact in the ledger stays open, not assumed. Do not stop when the frontier is empty. Stop when **one hypothesis survives and is confirmed by evidence the others cannot explain**, or when the user says the evidence is sufficient. If several hypotheses still stand and the cheap questions are used up, say so and hand off to `diagnosing-bugs` for a reproduction loop. Do not name a root cause until the user confirms the ledger matches what they saw.
+Each round's evidence reshapes the tree: rule out branches, add hypotheses the evidence suggests, recompute the frontier. Do not reason past the evidence: a hypothesis with no supporting fact in the ledger stays open, not assumed. Do not stop when the frontier is empty. Stop when **one hypothesis survives and is confirmed by evidence the others cannot explain**, or when the investigator says the evidence is sufficient. If several hypotheses still stand and the cheap questions are used up, say so and hand off to `diagnosing-bugs` for a reproduction loop. A witness who stops answering does not end the session: the ledger stays as it is, and nothing is concluded from silence. Do not name a root cause until the witness confirms the ledger matches what they saw, and the investigator agrees.
