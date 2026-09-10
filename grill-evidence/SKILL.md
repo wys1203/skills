@@ -35,6 +35,8 @@ Format each question like so:
 ➡️ **What it decides**: <which hypotheses this confirms or rules out, and what you expect to see under each>
 ```
 
+Mark a command you have not run yourself as untested, and ask the witness to paste the error as well as the output. A worked session is in [EXAMPLE.md](EXAMPLE.md); read it before your first round.
+
 Write every question in Simplified Technical English (ASD-STE100), whatever language the user speaks: one idea per sentence, no sentence longer than 20 words, active voice, the imperative for instructions, one meaning per word. Keep technical terms in English whatever language the rest of the sentence is in: `load balancer`, `sidecar`, `namespace`, never a translation. The user may be on call, tired, or junior: a question they misread produces evidence from the wrong place.
 
 Do not define terms inside the question; that buries the question. End every round with a **Terms** block instead: one line per technical term the user has not used yet, plus any hint that helps them answer (where such a thing usually lives, what it looks like). A reader who knows the terms skips the block; a reader who does not is not left guessing.
@@ -51,6 +53,8 @@ Keep an **evidence ledger** and restate it every round:
 ## Open
 - <hypothesis> — <waiting on Qn>
 ```
+
+Every Established entry names its source: the witness's words, a tool's output, a pasted log. An entry with no source is not evidence; remove it. What you know about how systems usually fail ranks the hypotheses and never enters Established.
 
 Redact every secret and token in anything you quote; write `<REDACTED>`. Quote only the lines that carry signal.
 

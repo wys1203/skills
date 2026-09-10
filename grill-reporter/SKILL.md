@@ -37,7 +37,7 @@ h3. Waiting on reporter
 - Qn — <one line>
 ```
 
-Rewrite the section below the rule in full each round; do not append. If no rule exists yet, add it at the first round. Use the ticket's own markup (wiki markup or ADF, whichever the MCP exposes).
+Rewrite the section below the rule in full each round; do not append. If no rule exists yet, add it at the first round. Use the ticket's own markup (wiki markup or ADF, whichever the MCP exposes). After writing, read the description back and compare the text above the rule with what you read at the start of the round. If it differs, restore it before you do anything else.
 
 **Before every post**, show the investigator the comment and the new description and wait for their go. A comment the reporter reads first sets whether they will cooperate; the investigator sees it before the reporter does.
 
@@ -45,4 +45,4 @@ Rewrite the section below the rule in full each round; do not append. If no rule
 
 **Ending.** The investigator ends the session, per `grill-evidence`. On ending, update the ledger one last time and post a closing comment that states the confirmed facts and thanks the reporter. The root cause goes in the comment only if the investigator says so.
 
-**Redact** in both the comment and the description: secrets, tokens, personal data the reporter pasted. Write `<REDACTED>`.
+**Redact** in both the comment and the description: secrets, tokens, personal data the reporter pasted. Write `<REDACTED>`. Before every post, scan both texts for `Bearer `, `token=`, `key=`, `password`, email addresses, and anything that looks copied from a credentials file.
